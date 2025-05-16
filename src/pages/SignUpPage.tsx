@@ -1,6 +1,5 @@
 import { SignUpForm } from "../layouts/signup-form"; 
 
-
   export default function SignUpPage() {
     return (
       <div className="relative min-h-screen w-full">

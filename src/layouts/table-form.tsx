@@ -19,6 +19,7 @@ const invoices = [
     Durum: "Banka Transferi",
     OdemeYontemi: "Credit Card",
     CoinAdresi: "12345",
+    SogukCuzdanAdresi: "12345",
     Adres: "Hamidiye mah. Demirbudak sit.",
     Miktar: "250000TL",
 
@@ -32,6 +33,7 @@ const invoices = [
     Durum: "Banka Transferi",
     OdemeYontemi: "IBAN",
     CoinAdresi: "54321",
+    SogukCuzdanAdresi: "12345",
     Adres: "Hamidiye mah. Demirbudak sit.",
     Miktar: "350000TL",
   },
@@ -44,6 +46,7 @@ const invoices = [
     Durum: "Banka Transferi",
     OdemeYontemi: "Credit Card",
     CoinAdresi: "23456",
+    SogukCuzdanAdresi: "12345",
     Adres: "Hamidiye mah. Demirbudak sit.",
     Miktar: "450000TL",
   },
@@ -64,6 +67,7 @@ export function TableForm() {
           <TableHead>Durum</TableHead>
           <TableHead>Odeme Yontemi</TableHead>
           <TableHead>Coin Adresi</TableHead>
+          <TableHead>Soguk Cuzdan Adresi</TableHead>
           <TableHead>Adres</TableHead>
           <TableHead className="text-right">Miktar</TableHead>
         </TableRow>
@@ -79,6 +83,7 @@ export function TableForm() {
             <TableCell>{invoice.Durum}</TableCell>
             <TableCell>{invoice.OdemeYontemi}</TableCell>
             <TableCell>{invoice.CoinAdresi}</TableCell>
+            <TableCell>{invoice.SogukCuzdanAdresi}</TableCell>
             <TableCell>{invoice.Adres}</TableCell>
             <TableCell className="text-right">{invoice.Miktar}</TableCell>
           </TableRow>
@@ -92,4 +97,3 @@ export function TableForm() {
     </Table>
   )
 }
-

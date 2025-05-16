@@ -1,4 +1,4 @@
-import { LoginForm } from "../layouts/login-form"; 
+import { LoginForm } from "../layouts/login-form";
 
   export default function LoginPage() {
     return (

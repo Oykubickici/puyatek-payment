@@ -21,8 +21,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 //import { isAtLeast18 } from "@/lib/age-controller";
-
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Adiniz en az iki harfli olmali" }),
@@ -37,15 +38,15 @@ const formSchema = z.object({
     .refine((val) => /^[A-ZÇĞİÖŞÜ]/.test(val.charAt(0)), {
       message: "İlk harf büyük olmalıdır.",
     }),
-  
-  birthdate: z
-    .date({
-      required_error: "Doğum tarihi zorunludur",
-      invalid_type_error: "Geçerli bir tarih giriniz",
-    }),
-    // .refine(isAtLeast18, {
-    //   message: "En az 18 yaşında olmalısınız",
-    // }),
+  wallet: z.string({ message: "Gecerli bir soguk cuzdan adresi giriniz." }),
+
+  birthdate: z.date({
+    required_error: "Doğum tarihi zorunludur",
+    invalid_type_error: "Geçerli bir tarih giriniz",
+  }),
+  // .refine(isAtLeast18, {
+  //   message: "En az 18 yaşında olmalısınız",
+  // }),
   address: z
     .string()
     .min(10, { message: "En az 2 karakter olabilir" })
@@ -59,24 +60,45 @@ export function SignUpForm({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "oyku",
-      surname: "bickici",
-      email: "oykudogg1@gmail.com",
-      password: "Oykubcikakd",
+      name: "",
+      surname: "",
+      email: "",
+      password: "",
+      wallet: undefined,
       birthdate: undefined,
-      address: "hamidiye mah demirbdak sit ikinci etap",
+      address: "",
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("Form submitted successfully");
+    axios
+      .post(
+        "http://127.0.0.1:8000/kayit-ol",
+        {
+          ...values,
+          id: uuidv4(),
+        },
+        {}
+      )
+      .then((response) => {
+        console.log("Kayıt başarılı:", response.data);
+        alert("Kayıt başarılı!");
+      })
+      .catch((error) => {
+        console.error(
+          "Kayıt başarısız:",
+          error.response?.data || error.message
+        );
+        alert("Kayıt sırasında bir hata oluştu.");
+      });
+    /*console.log("Form submitted successfully");
     console.log(values.name);
     console.log(values.surname);
     console.log(values.email);
     console.log(values.password);
     console.log(values.birthdate);
     console.log(values.address);
-
+    console.log(values.wallet);*/
   }
 
   return (
@@ -143,6 +165,20 @@ export function SignUpForm({
                 <FormLabel>Sifre</FormLabel>
                 <FormControl>
                   <Input type="password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="wallet"
+            render={({ field }) => (
+              <FormItem>
+                <div className="grid gap-2"></div>
+                <FormLabel>Soguk cuzdan adresiniz:</FormLabel>
+                <FormControl>
+                  <Input type="wallet" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
